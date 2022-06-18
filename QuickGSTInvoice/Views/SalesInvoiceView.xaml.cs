@@ -8,6 +8,8 @@ using System.IO;
 using System.Reflection;
 using System.Drawing;
 using QuickGSTInvoice.Services;
+using QuickGSTInvoice.Models;
+
 namespace QuickGSTInvoice.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -31,9 +33,44 @@ namespace QuickGSTInvoice.Views
         Syncfusion.Drawing.RectangleF QuantityCellBounds = Syncfusion.Drawing.RectangleF.Empty;
         /// <summary>
         /// Creates charts in a presentation.
+        /// 
+        /// 
         /// </summary>
+        /// 
+        public SalesInvoice GetSalesInvoice()
+        {
+        SalesInvoice SalesInvoice = new SalesInvoice();
+            SalesInvoice.IsIGST = false;
+            SalesInvoice.SOItems = new List<SOItem>();
+            SOItem SOItem = new SOItem();
+            SOItem.Id = "PN001";
+            SOItem.HSN = "7113";
+            SOItem.Description ="Silver Ornaments";
+            SOItem.IGST_Rate = 3;
+            SOItem.CGST_Rate = 1.5M;
+            SOItem.SGST_Rate = 1.5M;
+            SOItem.Qty = 3933;
+            SOItem.Qty = 3933;  
+            SOItem.Rate = 32.762M;
+            SalesInvoice.SOItems.Add(SOItem);
+
+             SOItem = new SOItem();
+            SOItem.Id = "PN002";
+            SOItem.HSN = "7113";
+            SOItem.Description = "Labour";
+            SOItem.IGST_Rate = 3;
+            SOItem.CGST_Rate = 1.5M;
+            SOItem.SGST_Rate = 1.5M;
+            SOItem.Qty = 2556;   
+            SOItem.Rate = 1;
+            SalesInvoice.SOItems.Add(SOItem);
+            SalesInvoice.calculateTax();
+            return SalesInvoice;
+        }
+
         private void OnButtonClicked(object sender, EventArgs e)
         {
+            SalesInvoice SalesInvoice = GetSalesInvoice();
             //Create a new PDF document.
             PdfDocument document = new();
             //Add a page to the document.
@@ -94,7 +131,7 @@ namespace QuickGSTInvoice.Views
             PdfGrid grid = new();
 
             //Add five columns to the grid.
-            grid.Columns.Add(5);
+            grid.Columns.Add(6);
 
             //Create the header row of the grid.
             PdfGridRow[] headerRow = grid.Headers.Add(1);
@@ -102,20 +139,27 @@ namespace QuickGSTInvoice.Views
             //Set style to the header row and set value to the header cells. 
             headerRow[0].Style.BackgroundBrush = new PdfSolidBrush(new PdfColor(68, 114, 196));
             headerRow[0].Style.TextBrush = PdfBrushes.White;
-            headerRow[0].Cells[0].Value = "Product ID";
+            headerRow[0].Cells[0].Value = "ID";
             headerRow[0].Cells[0].StringFormat.Alignment = PdfTextAlignment.Center;
-            headerRow[0].Cells[1].Value = "Product Name";
-            headerRow[0].Cells[2].Value = "Price ($)";
-            headerRow[0].Cells[3].Value = "Quantity";
-            headerRow[0].Cells[4].Value = "Total ($)";
+            headerRow[0].Cells[1].Value = "Description";
+            headerRow[0].Cells[2].Value = "HSN";
+            headerRow[0].Cells[2].StringFormat.Alignment = PdfTextAlignment.Center;
+            headerRow[0].Cells[3].Value = "Weight(gm)";
+            headerRow[0].Cells[4].Value = "Rate";
+            headerRow[0].Cells[5].Value = "Total (₹)";
+
+            foreach(var item in SalesInvoice.SOItems)
+            {
+                AddProducts("PN", item.Description, item.HSN, item.Rate, item.Qty, item.Taxable_Amt, grid);
+            }
 
             //Add products to the grid table.
-            AddProducts("CA-1098", "AWC Logo Cap", 8.99, 2, 17.98, grid);
-            AddProducts("LJ-0192", "Long-Sleeve Logo Jersey,M", 49.99, 3, 149.97, grid);
-            AddProducts("So-B909-M", "Mountain Bike Socks,M", 9.50, 2, 19, grid);
-            AddProducts("LJ-0192", "Long-Sleeve Logo Jersey,M", 49.99, 4, 199.96, grid);
-            AddProducts("FK-5136", "ML Fork", 175.49, 6, 1052.94, grid);
-            AddProducts("HL-U509", "Sports-100 Helmet,Black", 34.99, 1, 34.99, grid);
+            //AddProducts("CA-1098", "AWC Logo Cap", 8.99, 2, 17.98, grid);
+            //AddProducts("LJ-0192", "Long-Sleeve Logo Jersey,M", 49.99, 3, 149.97, grid);
+            //AddProducts("So-B909-M", "Mountain Bike Socks,M", 9.50, 2, 19, grid);
+            //AddProducts("LJ-0192", "Long-Sleeve Logo Jersey,M", 49.99, 4, 199.96, grid);
+            //AddProducts("FK-5136", "ML Fork", 175.49, 6, 1052.94, grid);
+            //AddProducts("HL-U509", "Sports-100 Helmet,Black", 34.99, 1, 34.99, grid);
 
             #region Header         
 
@@ -133,7 +177,7 @@ namespace QuickGSTInvoice.Views
             //Draw rectangle in PDF page. 
             graphics.DrawRectangle(darkBlueBrush, headerTotalBounds);
             //Draw the toal value to PDF page. 
-            graphics.DrawString("$" + GetTotalAmount(grid).ToString(), arialRegularFont, whiteBrush, new Syncfusion.Drawing.RectangleF(400, 0, pageWidth - 400, headerHeight + 10), format);
+            graphics.DrawString("₹" + SalesInvoice.Total_InvAmt, arialRegularFont, whiteBrush, new Syncfusion.Drawing.RectangleF(400, 0, pageWidth - 400, headerHeight + 10), format);
             //Create font from font stream. 
             arialRegularFont = new PdfTrueTypeFont(fontStream, 9, PdfFontStyle.Regular);
             //Set bottom line alignment and draw the text to PDF page. 
@@ -168,11 +212,12 @@ namespace QuickGSTInvoice.Views
 
             #region Grid
             //Set width to grid columns. 
-            grid.Columns[0].Width = 110;
-            grid.Columns[1].Width = 150;
-            grid.Columns[2].Width = 110;
-            grid.Columns[3].Width = 70;
-            grid.Columns[4].Width = 100;
+            grid.Columns[0].Width = 70;
+            grid.Columns[1].Width = 100;
+            grid.Columns[2].Width = 60;
+            grid.Columns[3].Width = 90;
+            grid.Columns[4].Width = 90;
+            grid.Columns[5].Width = 90;
 
             for (int i = 0; i < grid.Headers.Count; i++)
             {
@@ -195,7 +240,7 @@ namespace QuickGSTInvoice.Views
 
                 }
                 //Set value to the grid header cell. 
-                grid.Headers[0].Cells[0].Value = "Product ID";
+                //grid.Headers[0].Cells[0].Value = "Product ID";
             }
             for (int i = 0; i < grid.Rows.Count; i++)
             {
@@ -233,10 +278,47 @@ namespace QuickGSTInvoice.Views
             };
             Syncfusion.Drawing.RectangleF bounds = new(QuantityCellBounds.X, y, QuantityCellBounds.Width, QuantityCellBounds.Height);
             //Draw text to PDF page based on the layout result. 
-            page.Graphics.DrawString("Grand Total:", arialBoldFont, PdfBrushes.Black, bounds, format);
+            page.Graphics.DrawString("Taxable Total:", arialBoldFont, PdfBrushes.Black, bounds, format);
             //Draw the total amount value to PDF page based on the layout result. 
             bounds = new Syncfusion.Drawing.RectangleF(TotalPriceCellBounds.X, y, TotalPriceCellBounds.Width, TotalPriceCellBounds.Height);
-            page.Graphics.DrawString("$" + GetTotalAmount(grid).ToString(), arialBoldFont, PdfBrushes.Black, bounds);
+            page.Graphics.DrawString("₹" + SalesInvoice.Totoal_Taxable_Amt, arialBoldFont, PdfBrushes.Black, bounds);
+            if (!SalesInvoice.IsIGST)
+            {
+                y = y + lineSpace;
+                Syncfusion.Drawing.RectangleF SGSTbounds = new(QuantityCellBounds.X, y, QuantityCellBounds.Width, QuantityCellBounds.Height);
+                //Draw text to PDF page based on the layout result. 
+                page.Graphics.DrawString("SGST 1.5%:", arialBoldFont, PdfBrushes.Black, SGSTbounds, format);
+                //Draw the total amount value to PDF page based on the layout result. 
+                SGSTbounds = new Syncfusion.Drawing.RectangleF(TotalPriceCellBounds.X, y, TotalPriceCellBounds.Width, TotalPriceCellBounds.Height);
+                page.Graphics.DrawString("₹" + SalesInvoice.SGST_Amt, arialBoldFont, PdfBrushes.Black, SGSTbounds);
+
+                y = y + lineSpace;
+                Syncfusion.Drawing.RectangleF CGSTbounds = new(QuantityCellBounds.X, y, QuantityCellBounds.Width, QuantityCellBounds.Height);
+                //Draw text to PDF page based on the layout result. 
+                page.Graphics.DrawString("CGST 1.5%:", arialBoldFont, PdfBrushes.Black, CGSTbounds, format);
+                //Draw the total amount value to PDF page based on the layout result. 
+                CGSTbounds = new Syncfusion.Drawing.RectangleF(TotalPriceCellBounds.X, y, TotalPriceCellBounds.Width, TotalPriceCellBounds.Height);
+                page.Graphics.DrawString("₹" + SalesInvoice.CGST_Amt, arialBoldFont, PdfBrushes.Black, CGSTbounds);
+            }
+            else
+            {
+                y = y + lineSpace;
+                Syncfusion.Drawing.RectangleF IGSTbounds = new(QuantityCellBounds.X, y, QuantityCellBounds.Width, QuantityCellBounds.Height);
+                //Draw text to PDF page based on the layout result. 
+                page.Graphics.DrawString("IGST 1.5%:", arialBoldFont, PdfBrushes.Black, IGSTbounds, format);
+                //Draw the total amount value to PDF page based on the layout result. 
+                IGSTbounds = new Syncfusion.Drawing.RectangleF(TotalPriceCellBounds.X, y, TotalPriceCellBounds.Width, TotalPriceCellBounds.Height);
+                page.Graphics.DrawString("₹" + SalesInvoice.IGST_Amt, arialBoldFont, PdfBrushes.Black, IGSTbounds);
+            }
+            y = y + lineSpace;
+            Syncfusion.Drawing.RectangleF NetToalbounds = new(QuantityCellBounds.X, y, QuantityCellBounds.Width, QuantityCellBounds.Height);
+            //Draw text to PDF page based on the layout result. 
+            page.Graphics.DrawString("Grand Total:", arialBoldFont, PdfBrushes.Black, NetToalbounds, format);
+            //Draw the total amount value to PDF page based on the layout result. 
+            NetToalbounds = new Syncfusion.Drawing.RectangleF(TotalPriceCellBounds.X, y, TotalPriceCellBounds.Width, TotalPriceCellBounds.Height);
+            page.Graphics.DrawString("₹" + SalesInvoice.Total_InvAmt, arialBoldFont, PdfBrushes.Black, NetToalbounds);
+
+
             #endregion
             //Create border pen with custom dash style and draw the border to page. 
             borderPen.DashStyle = PdfDashStyle.Custom;
@@ -301,15 +383,16 @@ namespace QuickGSTInvoice.Views
 
         #region Helper Methods
         //Create and row for the grid.
-        void AddProducts(string productId, string productName, double price, int quantity, double total, PdfGrid grid)
+        void AddProducts(string productId, string productName, string hsn,decimal price, decimal quantity, decimal total, PdfGrid grid)
         {
             //Add a new row and set the product value to grid row cells. 
             PdfGridRow row = grid.Rows.Add();
             row.Cells[0].Value = productId;
             row.Cells[1].Value = productName;
-            row.Cells[2].Value = price.ToString();
+            row.Cells[2].Value = hsn;
             row.Cells[3].Value = quantity.ToString();
-            row.Cells[4].Value = total.ToString();
+            row.Cells[4].Value = price.ToString();
+            row.Cells[5].Value = total.ToString();
         }
         /// <summary>
         /// Get the Total amount of purcharsed items.
