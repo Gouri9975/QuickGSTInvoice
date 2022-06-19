@@ -107,6 +107,8 @@ namespace QuickGSTInvoice.Views
             PdfTrueTypeFont headerFont = new(fontStream, 30, PdfFontStyle.Regular);
             PdfTrueTypeFont arialRegularFont = new(fontStream, 18, PdfFontStyle.Regular);
             PdfTrueTypeFont arialBoldFont = new(fontStream, 9, PdfFontStyle.Bold);
+            PdfTrueTypeFont logoFont = new(fontStream, 20, PdfFontStyle.Bold);
+            PdfTrueTypeFont arialRegular9 = new(fontStream, 9, PdfFontStyle.Regular);
 
             //Create string format.
             PdfStringFormat format = new();
@@ -164,18 +166,41 @@ namespace QuickGSTInvoice.Views
             #region Header         
 
             //Fill the header with light blue brush 
-            graphics.DrawRectangle(lightBlueBrush, new Syncfusion.Drawing.RectangleF(0, 0, pageWidth, headerHeight));
+            graphics.DrawRectangle(lightBlueBrush, new Syncfusion.Drawing.RectangleF(0, 0, pageWidth, 120));
 
-            string title = "INVOICE";
+            string title = "PN Jewellers";
+            
 
             //Specificy the bounds for total value. 
-            Syncfusion.Drawing.RectangleF headerTotalBounds = new(400, 0, pageWidth - 400, headerHeight);
-
+            Syncfusion.Drawing.RectangleF headerTotalBounds = new(400, 0, pageWidth - 400, 120);         
             //Measure the string size using font. 
-            Syncfusion.Drawing.SizeF textSize = headerFont.MeasureString(title);
-            graphics.DrawString(title, headerFont, whiteBrush, new Syncfusion.Drawing.RectangleF(0, 0, textSize.Width + 50, headerHeight), format);
+            Syncfusion.Drawing.SizeF textSize = logoFont.MeasureString(title);
+          //  graphics.DrawString(title, logoFont, whiteBrush, new Syncfusion.Drawing.RectangleF(0, 0, textSize.Width + 50, 2), format);
             //Draw rectangle in PDF page. 
-            graphics.DrawRectangle(darkBlueBrush, headerTotalBounds);
+           graphics.DrawRectangle(darkBlueBrush, headerTotalBounds);
+            y = 5;
+            x = margin;
+            graphics.DrawString("PN Jewellers", logoFont, PdfBrushes.White, new Syncfusion.Drawing.PointF(x, y));
+            y = textSize.Height + 5;
+            graphics.DrawString("Prop: Kapil Nikam", arialRegular9, PdfBrushes.White, new Syncfusion.Drawing.PointF(x, y));
+            y += arialRegular9.Height + 5;
+            graphics.DrawString("3564,Navratn Chowk,A/P:Pattan Kodoli-416202", arialRegular9, PdfBrushes.White, new Syncfusion.Drawing.PointF(x, y));
+            y += arialRegular9.Height + 5;
+            graphics.DrawString("Tal:Hatkangale ,Dist:kolhapur(Maharastra)", arialRegular9, PdfBrushes.White, new Syncfusion.Drawing.PointF(x, y));
+            y += arialRegular9.Height + 5;
+            graphics.DrawString("Mo:8888469657", arialRegular9, PdfBrushes.White, new Syncfusion.Drawing.PointF(x, y));
+            y += arialRegular9.Height + 5;
+            graphics.DrawString("GSTN:27CAGPN2219C1ZR   PAN:CAGPN2219C", arialRegular9, PdfBrushes.White, new Syncfusion.Drawing.PointF(x, y));
+            y += arialRegular9.Height + 5;
+            graphics.DrawString("State Code:27", arialRegular9, PdfBrushes.White, new Syncfusion.Drawing.PointF(x, y));
+
+            //graphics.DrawString("9920 BridgePointe Parkway,", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+            //y += arialRegularFont.Height + 5;
+            //graphics.DrawString("9365550136", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+
+            //Draw rectangle in PDF page. 
+            //graphics.DrawRectangle(darkBlueBrush, CompanyAddressBoundsize);
+
             //Draw the toal value to PDF page. 
             graphics.DrawString("₹" + SalesInvoice.Total_InvAmt, arialRegularFont, whiteBrush, new Syncfusion.Drawing.RectangleF(400, 0, pageWidth - 400, headerHeight + 10), format);
             //Create font from font stream. 
@@ -186,7 +211,7 @@ namespace QuickGSTInvoice.Views
             #endregion
             //Measure the string size using font. 
             Syncfusion.Drawing.SizeF size = arialRegularFont.MeasureString("Invoice Number: 2058557939");
-            y = headerHeight + margin;
+            y = headerHeight + margin+30;
             x = (pageWidth - margin) - size.Width;
             //Draw text to PDF page with provided font and location. 
             graphics.DrawString("Invoice Number: 2058557939", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
@@ -197,18 +222,26 @@ namespace QuickGSTInvoice.Views
             //Draw text to PDF page with provided font and location. 
             graphics.DrawString("Date: " + DateTime.Now.ToString("dddd dd, MMMM yyyy"), arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
 
-            y = headerHeight + margin;
+            y += arialRegularFont.Height + 7;
+            graphics.DrawString("Transportation Mode:", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+            y += arialRegularFont.Height + 7;
+            graphics.DrawString("Vehicle Number :", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+            y += arialRegularFont.Height + 7;
+            graphics.DrawString("Place of Supply :", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+
+            y = headerHeight + margin+30;
             x = margin;
             //Draw text to PDF page with provided font and location. 
             graphics.DrawString("Bill To:", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
-            y += arialRegularFont.Height + lineSpace;
-            graphics.DrawString("Abraham Swearegin,", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
-            y += arialRegularFont.Height + lineSpace;
-            graphics.DrawString("United States, California, San Mateo,", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
-            y += arialRegularFont.Height + lineSpace;
-            graphics.DrawString("9920 BridgePointe Parkway,", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
-            y += arialRegularFont.Height + lineSpace;
-            graphics.DrawString("9365550136", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+            y += arialRegularFont.Height + 7;
+            graphics.DrawString("Ganesh Jewellers,", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+            y += arialRegularFont.Height + 7;
+            graphics.DrawString("Sarafa Market,Nagpur", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+            y += arialRegularFont.Height + 7;
+            graphics.DrawString("GSTN:27CAGPN2219C1ZR,", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+            y += arialRegularFont.Height + 7;
+            graphics.DrawString("State:Maharastra,    State Code: 27", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+           
 
             #region Grid
             //Set width to grid columns. 
@@ -337,21 +370,21 @@ namespace QuickGSTInvoice.Views
 
             //Calculate the text position and draw the text to PDF page. 
             y = pageHeight - 100 + margin;
-            size = arialRegularFont.MeasureString("800 Interchange Blvd.");
+            size = arialRegularFont.MeasureString("");
             x = pageWidth - size.Width - margin;
-            graphics.DrawString("800 Interchange Blvd.", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+            graphics.DrawString("", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
 
             //Calculate the text position and draw the text to PDF page. 
             y += arialRegularFont.Height + lineSpace;
-            size = arialRegularFont.MeasureString("Suite 2501,  Austin, TX 78721");
+            size = arialRegularFont.MeasureString("For- PN Jewellers");
             x = pageWidth - size.Width - margin;
-            graphics.DrawString("Suite 2501,  Austin, TX 78721", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+            graphics.DrawString("For- PN Jewellers", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
 
             //Calculate the text position and draw the text to PDF page. 
             y += arialRegularFont.Height + lineSpace;
-            size = arialRegularFont.MeasureString("Any Questions? support@adventure-works.com");
+            size = arialRegularFont.MeasureString("Any Questions? pn.jewellers@yahoo.com");
             x = pageWidth - size.Width - margin;
-            graphics.DrawString("Any Questions? support@adventure-works.com", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
+            graphics.DrawString("Any Questions? pn.jewellers@yahoo.com", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
 
             using MemoryStream ms = new();
             //Saves the PDF to the memory stream.
