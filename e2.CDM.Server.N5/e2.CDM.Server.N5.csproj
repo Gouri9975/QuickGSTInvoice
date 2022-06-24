@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>e2.CDM.Lib</AssemblyName>
+    <RootNamespace>e2.CDM.Lib</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>e2.CDM.Server.N5.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>e2.CDM.Server.N5.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Csla" Version="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="20.1.0.47" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\e2.CDM.DAL.Lib.N5\e2.CDM.DAL.Lib.N5.csproj" />
+    <ProjectReference Include="..\e2.Data.EFCore\e2.Data.EFCore.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\e2.CDM.Shared\e2.CDM.Shared.projitems" Label="Shared" />
+
+</Project>

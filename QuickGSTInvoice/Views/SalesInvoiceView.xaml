@@ -4,7 +4,7 @@
              xmlns:dxcv="clr-namespace:DevExpress.Maui.CollectionView;assembly=DevExpress.Maui.CollectionView"
              xmlns:local="clr-namespace:QuickGSTInvoice.ViewModels"
              xmlns:model="clr-namespace:QuickGSTInvoice.Models"
-             xmlns:templates="clr-namespace:QuickGSTInvoice.Views.Templates"
+             xmlns:templates="clr-namespace:QuickGSTInvoice.Views"
              Title="{Binding Title}"
              IconImageSource="browse"
              BackgroundColor="{StaticResource NormalBackgroundColor}"

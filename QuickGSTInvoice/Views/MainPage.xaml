@@ -16,7 +16,7 @@
                   Route="QuickGSTInvoice.Views.AboutPage"/>
     <ShellContent Title="Invoice" Icon="browse"
                   ContentTemplate="{DataTemplate local:SalesInvoiceView}" />
-
+ 
     <!--<ShellContent Title="Browse" Icon="browse"
                   ContentTemplate="{DataTemplate local:ItemsPage}" />
     

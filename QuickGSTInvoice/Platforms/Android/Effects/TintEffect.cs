@@ -6,6 +6,7 @@ using QuickGSTInvoice.Effects;
 using QuickGSTInvoice.Platforms.Android.Effects;
 using System.ComponentModel;
 
+
 [assembly: ResolutionGroupName("QuickGSTInvoice")]
 [assembly: ExportEffect(typeof(TintColorEffect), nameof(TintEffect))]
 

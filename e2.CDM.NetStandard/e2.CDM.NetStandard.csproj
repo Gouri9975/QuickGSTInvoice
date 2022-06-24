@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>e2.CDM.Lib</AssemblyName>
+    <RootNamespace>e2.CDM.Lib</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>TRACE;RELEASE;NETSTANDARD2_0;NETFX_CORE</DefineConstants>
+    <CodeAnalysisRuleSet>e2.CDM.NetStandard.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE;DEBUG;NETSTANDARD2_0;NETFX_CORE</DefineConstants>
+    <CodeAnalysisRuleSet>e2.CDM.NetStandard.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <Import Project="..\e2.CDM.Shared\e2.CDM.Shared.projitems" Label="Shared" />
+
+  <ItemGroup>
+    <PackageReference Include="Csla" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="20.1.0.47" />
+  </ItemGroup>
+
+</Project>

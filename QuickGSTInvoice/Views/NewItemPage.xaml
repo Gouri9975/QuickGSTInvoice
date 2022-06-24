@@ -13,16 +13,16 @@
         <ToolbarItem Text="Save" Command="{Binding SaveCommand}"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-            <dxdf:DataFormView x:Name="dataForm" DataObject="{Binding .}" CommitMode="PropertyChanged" ContentPadding="0" Margin="15">
-                <dxdf:DataFormView.Resources>
-                    <Style TargetType="dxe:TextEdit">
-                        <Setter Property="TextFontSize" Value="16" />
-                        <Setter Property="TextFontFamily" Value="Roboto" />
-                        <Setter Property="PlaceholderColor" Value="#acacac"/>
-                    </Style>
-                </dxdf:DataFormView.Resources>
-                <dxdf:DataFormTextItem InplaceLabelText="Text" FieldName="Text" IsLabelVisible="False" ></dxdf:DataFormTextItem>
-                <dxdf:DataFormTextItem InplaceLabelText="Description" FieldName="Description" IsLabelVisible="False"></dxdf:DataFormTextItem>
-            </dxdf:DataFormView>
+        <dxdf:DataFormView x:Name="dataForm" DataObject="{Binding .}" CommitMode="PropertyChanged" ContentPadding="0" Margin="15">
+            <dxdf:DataFormView.Resources>
+                <Style TargetType="dxe:TextEdit">
+                    <Setter Property="TextFontSize" Value="16" />
+                    <Setter Property="TextFontFamily" Value="Roboto" />
+                    <Setter Property="PlaceholderColor" Value="#acacac"/>
+                </Style>
+            </dxdf:DataFormView.Resources>
+            <dxdf:DataFormTextItem InplaceLabelText="Text" FieldName="Text" IsLabelVisible="False" ></dxdf:DataFormTextItem>
+            <dxdf:DataFormTextItem InplaceLabelText="Description" FieldName="Description" IsLabelVisible="False"></dxdf:DataFormTextItem>
+        </dxdf:DataFormView>
     </ContentPage.Content>
 </ContentPage>

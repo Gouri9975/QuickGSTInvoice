@@ -4,7 +4,7 @@ using Microsoft.Maui.Platform;
 using QuickGSTInvoice.Effects;
 using QuickGSTInvoice.Platforms.iOS.Effects;
 using System.ComponentModel;
-using UIKit;
+/*using UIKit*/
 
 [assembly: ResolutionGroupName("QuickGSTInvoice")]
 [assembly: ExportEffect(typeof(TintColorEffect), nameof(TintEffect))]

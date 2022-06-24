@@ -180,7 +180,7 @@ namespace QuickGSTInvoice.Views
            graphics.DrawRectangle(darkBlueBrush, headerTotalBounds);
             y = 5;
             x = margin;
-            graphics.DrawString("PN Jewellers", logoFont, PdfBrushes.White, new Syncfusion.Drawing.PointF(x, y));
+            graphics.DrawString("PN Jeweller" , logoFont, PdfBrushes.White, new Syncfusion.Drawing.PointF(x, y));
             y = textSize.Height + 5;
             graphics.DrawString("Prop: Kapil Nikam", arialRegular9, PdfBrushes.White, new Syncfusion.Drawing.PointF(x, y));
             y += arialRegular9.Height + 5;
@@ -193,7 +193,7 @@ namespace QuickGSTInvoice.Views
             graphics.DrawString("GSTN:27CAGPN2219C1ZR   PAN:CAGPN2219C", arialRegular9, PdfBrushes.White, new Syncfusion.Drawing.PointF(x, y));
             y += arialRegular9.Height + 5;
             graphics.DrawString("State Code:27", arialRegular9, PdfBrushes.White, new Syncfusion.Drawing.PointF(x, y));
-
+            //graphics.DrawImage("nx.svg", Syncfusion.Drawing.PointF.Empty);
             //graphics.DrawString("9920 BridgePointe Parkway,", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
             //y += arialRegularFont.Height + 5;
             //graphics.DrawString("9365550136", arialRegularFont, PdfBrushes.Black, new Syncfusion.Drawing.PointF(x, y));
