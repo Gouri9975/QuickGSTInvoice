@@ -64,6 +64,8 @@
 		<PackageReference Include="DevExpress.Maui.Controls" Version="22.1.2-beta-22159" />
 		<PackageReference Include="DevExpress.Maui.Scheduler" Version="22.1.2-beta-22159" />
 		<PackageReference Include="DevExpress.Maui.Editors" Version="22.1.2-beta-22159" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.8.116" />
 		<PackageReference Include="Syncfusion.Pdf.NET" Version="20.1.0.60" />
 	</ItemGroup>
 
@@ -80,6 +82,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Common\" />
 	  <Folder Include="Platforms\Android\Resources\xml\" />
 	</ItemGroup>
 
