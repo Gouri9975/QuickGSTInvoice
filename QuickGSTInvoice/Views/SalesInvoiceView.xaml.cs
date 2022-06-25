@@ -9,6 +9,8 @@ using System.Reflection;
 using System.Drawing;
 using QuickGSTInvoice.Services;
 using QuickGSTInvoice.Models;
+using Csla;
+using BusinessLibrary;
 
 namespace QuickGSTInvoice.Views
 {
@@ -443,5 +445,23 @@ namespace QuickGSTInvoice.Views
 
         }
         #endregion
+
+        private async void AddP_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                var dp = App.ApplicationContext.GetRequiredService<IDataPortal<PersonEdit>>();
+                var per = await dp.CreateAsync();
+                per.Name = "Sac";
+                if (per.IsValid && per.IsSavable)
+                    per = await per.SaveAsync();
+            }
+            catch(Exception ex)
+            {
+                var s = ex.Message;
+                
+            }
+           
+        }
     }
 }

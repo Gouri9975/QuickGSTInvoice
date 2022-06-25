@@ -1,5 +1,6 @@
 ﻿using DevExpress.Maui;
 using Microsoft.Maui.Controls.Compatibility.Hosting;
+using SQLitePCL;
 
 namespace QuickGSTInvoice
 {
@@ -8,6 +9,7 @@ namespace QuickGSTInvoice
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+           // raw.SetProvider(new SQLite3Provider_sqlite3());
             builder
                 .UseMauiApp<App>()
                 .UseDevExpress()
@@ -20,6 +22,7 @@ namespace QuickGSTInvoice
                     fonts.AddFont("univia-pro-regular.ttf", "Univia-Pro");
                     fonts.AddFont("univia-pro-medium.ttf", "Univia-Pro Medium");
                 })
+
                 .UseMauiCompatibility()
                 .ConfigureEffects((effects) =>
                 {

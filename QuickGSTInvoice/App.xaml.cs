@@ -13,26 +13,46 @@ namespace QuickGSTInvoice
         public App()
         {
             InitializeComponent();
-
+            ConfigureServices();
             DependencyService.Register<MockDataStore>();
             DependencyService.Register<NavigationService>();
             Routing.RegisterRoute(typeof(ItemDetailPage).FullName, typeof(ItemDetailPage));
             Routing.RegisterRoute(typeof(NewItemPage).FullName, typeof(NewItemPage));
-            var services = new ServiceCollection();
-            services.AddTransient<HttpClient>();
-            services.AddCsla(o => o
-              .DataPortal(dp => dp
-                .UseHttpProxy(hp => hp
-                  .DataPortalUrl = "https://localhost:44332/api/dataportal")));
-            var provider = services.BuildServiceProvider();
-            ApplicationContext = provider.GetService<ApplicationContext>();
-            App.DataPortalFactory = provider.GetRequiredService<IDataPortalFactory>();
-           // e2.CDM.Lib.OdataCsla.DataPortalFactory = App.DataPortalFactory;
-           // e2.CDM.Lib.RouteEvent.Portal = e2.CDM.Lib.OdataCsla.DataPortalFactory.GetPortal<e2.CDM.Lib.RouteEvent>();
-
-          //  var s = e2.CDM.Lib.RouteEvent.GetRouteEventAsync(new Guid());
-            //  e2.CDM.Lib.RouteEvent.Portal = provider.GetRequiredService<IDataPortalFactory>();
+          
             MainPage = new MainPage();
         }
+        private void ConfigureServices()
+        {
+            var services = new ServiceCollection();
+
+            // The CSLA configuration here uses an ApplicationContextManager
+            // copied from the Csla.Xaml.Shared project, so the same manager
+            // used for WPF, UWP, etc.
+
+            // use local data portal
+            services.AddCsla(o => o
+              .RegisterContextManager<Csla.Xaml.ApplicationContextManager>());
+            services.AddTransient(typeof(DataAccess.IPersonDal), typeof(DataAccess.PersonSQLiteDal));
+
+            // use remote data portal (requires an app server
+            // that can be reached from your Android emulator)
+            //
+            //services.AddTransient<System.Net.Http.HttpClient>();
+            //services.AddCsla(o => o
+            //  .RegisterContextManager<Csla.Xaml.ApplicationContextManager>()
+            //  .DataPortal(dpo => dpo
+            //    .UseHttpProxy(hpo => hpo
+            //      .DataPortalUrl = "http://myserver/api/dataportal")));
+
+            var provider = services.BuildServiceProvider();
+            ApplicationContext = provider.GetService<ApplicationContext>();
+           var s= DataAccess.PersonSQLiteDal.GetConnection("d");
+
+            //var proxy = provider.GetService<Csla.DataPortalClient.IDataPortalProxy>();
+            //var dp = provider.GetService<IDataPortal<BusinessLibrary.PersonList>>();
+            //var dp = Csla.Xaml.ApplicationContextManager.GetApplicationContext()
+            //  .GetRequiredService<IDataPortal<BusinessLibrary.PersonList>>();
+        }
+
     }
 }

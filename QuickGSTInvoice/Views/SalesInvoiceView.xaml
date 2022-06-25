@@ -26,6 +26,8 @@
 
             <Label x:Name="label2" Text=" " VerticalOptions="Center"></Label>
             <Button x:Name="generateDocument" Clicked ="OnButtonClicked" Text ="Generate PDF" HorizontalOptions="Start"></Button>
+            <Button  Clicked ="AddP_Clicked"  Text ="Generate PDF" HorizontalOptions="Start"></Button>
+
         </StackLayout>
         <!--<dxcv:DXCollectionView x:Name="ItemsListView" Grid.Row="2"
             ItemsSource="{Binding Items}"

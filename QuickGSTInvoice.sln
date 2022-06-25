@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "e2.CDM.NetStandard", "e2.CD
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "e2.Data.EFCore", "e2.Data.EFCore\e2.Data.EFCore.csproj", "{AFE69385-CF7A-4B06-8426-D21A43500E56}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "e2.CDM.DAL.Shared", "e2.CDM.DAL.Shared\e2.CDM.DAL.Shared.shproj", "{DB93A1CC-866E-41D8-9362-047FA2B6DA43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		e2.CDM.DAL.Shared\e2.CDM.DAL.Shared.projitems*{7c0a5fe9-8265-4972-993a-e49b5e927f4a}*SharedItemsImports = 5
 		e2.CDM.Shared\e2.CDM.Shared.projitems*{c1900c0e-aa7a-486e-b7dc-d06d53e69b31}*SharedItemsImports = 5
+		e2.CDM.DAL.Shared\e2.CDM.DAL.Shared.projitems*{db93a1cc-866e-41d8-9362-047fa2b6da43}*SharedItemsImports = 13
 		e2.CDM.Shared\e2.CDM.Shared.projitems*{e943a6f0-e0fe-4d4f-950a-cfb7d4d97623}*SharedItemsImports = 5
 		e2.CDM.Shared\e2.CDM.Shared.projitems*{ef95a025-6fab-48c5-aed1-c64b6fd5d559}*SharedItemsImports = 13
 	EndGlobalSection
