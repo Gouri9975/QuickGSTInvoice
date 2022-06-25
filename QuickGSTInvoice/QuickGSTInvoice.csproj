@@ -85,7 +85,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Common\" />
-	  <Folder Include="BusinessLibrary\" />
 	  <Folder Include="Platforms\Android\Resources\xml\" />
 	</ItemGroup>
 

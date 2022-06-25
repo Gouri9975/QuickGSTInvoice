@@ -450,11 +450,13 @@ namespace QuickGSTInvoice.Views
         {
             try
             {
-                var dp = App.ApplicationContext.GetRequiredService<IDataPortal<PersonEdit>>();
-                var per = await dp.CreateAsync();
-                per.Name = "Sac";
-                if (per.IsValid && per.IsSavable)
-                    per = await per.SaveAsync();
+             var dp2=   App.ApplicationContext.GetRequiredService<IDataPortal<PersonList>>();
+              var list= await dp2.FetchAsync();
+                //var dp = App.ApplicationContext.GetRequiredService<IDataPortal<PersonEdit>>();
+                //var per = await dp.CreateAsync();
+                //per.Name = "Sac";
+                //if (per.IsValid && per.IsSavable)
+                //    per = await per.SaveAsync();
             }
             catch(Exception ex)
             {
