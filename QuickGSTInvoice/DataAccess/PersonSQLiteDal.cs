@@ -18,8 +18,6 @@ namespace DataAccess
         public PersonSQLiteDal()
         {
             db= GetConnection("Person");
-            var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Person" + ".sqlite");
-            db = new SQLiteConnection(dbPath);
             db.CreateTable<PersonEntity>();
            
         }
@@ -66,8 +64,13 @@ namespace DataAccess
     {
       if (Exists(person.Id))
             throw new InvalidOperationException($"Key exists {person.Id}");
-            int lastId = db.Table<PersonEntity>().Max(m => m.Id);
-            person.Id = ++lastId;
+            if (db.Table<PersonEntity>().Count() > 0)
+            {
+                int lastId = db.Table<PersonEntity>().Max(m => m.Id);
+                person.Id = ++lastId;
+            }
+            else
+                person.Id = 1;
             db.Insert(person);           
             return person;
    }

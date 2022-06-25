@@ -46,7 +46,7 @@ namespace QuickGSTInvoice
 
             var provider = services.BuildServiceProvider();
             ApplicationContext = provider.GetService<ApplicationContext>();
-           var s= DataAccess.PersonSQLiteDal.GetConnection("d");
+           //var s= DataAccess.PersonSQLiteDal.GetConnection("d");
 
             //var proxy = provider.GetService<Csla.DataPortalClient.IDataPortalProxy>();
             //var dp = provider.GetService<IDataPortal<BusinessLibrary.PersonList>>();
